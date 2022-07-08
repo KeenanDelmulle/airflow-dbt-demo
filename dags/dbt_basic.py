@@ -5,7 +5,7 @@ from airflow.operators.bash_operator import BashOperator
 
 # We're hardcoding this value here for the purpose of the demo, but in a production environment this
 # would probably come from a config file and/or environment variables!
-DBT_PROJECT_DIR = "/usr/local/airflow/dbt"
+DBT_PROJECT_DIR = "/home/keenan/code/airflow-dbt-demo" #/usr/local/airflow/dbt
 
 
 with DAG(
@@ -16,11 +16,11 @@ with DAG(
     catchup=False,
     default_args={
         "env": {
-            "DBT_USER": "{{ conn.postgres.login }}",
-            "DBT_ENV_SECRET_PASSWORD": "{{ conn.postgres.password }}",
-            "DBT_HOST": "{{ conn.postgres.host }}",
-            "DBT_SCHEMA": "{{ conn.postgres.schema }}",
-            "DBT_PORT": "{{ conn.postgres.port }}",
+            "DBT_USER": "{{ conn.postgres_default.login }}", #conn.postgres_default.login
+            "DBT_ENV_SECRET_PASSWORD": "{{ conn.postgres_default.password}}", #conn.postgres_default.password
+            "DBT_HOST": "{{ conn.postgres_default.host }}", #conn.postgres_default.host
+            "DBT_SCHEMA": "{{ conn.postgres_default.schema }}", #conn.postgres_default.schema
+            "DBT_PORT": "{{ conn.postgres_default.port }}",
         }
     },
 ) as dag:
